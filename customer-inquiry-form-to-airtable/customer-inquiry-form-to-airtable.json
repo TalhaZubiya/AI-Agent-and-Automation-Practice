@@ -1,0 +1,156 @@
+{
+  "name": "Customer Inquiry Form to Airtable",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Customer Inquiry Form",
+        "formDescription": "Please fill out the form with your basic information and inquiry details. We will review your submission and contact you if needed.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name",
+              "placeholder": "Enter Your Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email",
+              "placeholder": "Enter Your Email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Phone Number",
+              "placeholder": "Enter Your Phone Number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Summary",
+              "fieldType": "textarea",
+              "placeholder": "Submit your information and inquiry",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ecd09340-88c7-4807-a19b-df7705b03cc5",
+      "name": "On form submission",
+      "webhookId": "7be264cd-1da5-4dca-a061-9acebdab4e7e"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appTSxoc2QjfixCb0",
+          "mode": "list",
+          "cachedResultName": "workflow 1",
+          "cachedResultUrl": "https://airtable.com/appTSxoc2QjfixCb0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblZYJehpdFNtRyNM",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appTSxoc2QjfixCb0/tblZYJehpdFNtRyNM"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.Name }}",
+            "Email": "={{ $json.Email }}",
+            "Phone Number": "={{ $json['Phone Number'] }}",
+            "Summary": "={{ $json.Summary }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Phone Number",
+              "displayName": "Phone Number",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Summary",
+              "displayName": "Summary",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "7b9c0c7b-fb93-4df7-9cb6-03780cd81848",
+      "name": "Create a record"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "6a3adcaa-ec2c-4fb7-ad0d-711682a61ec1",
+  "nodeGroups": [],
+  "id": "P1KdHThHvRztneWD",
+  "tags": []
+}
