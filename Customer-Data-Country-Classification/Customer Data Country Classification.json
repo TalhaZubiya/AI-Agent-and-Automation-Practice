@@ -1,0 +1,261 @@
+{
+  "name": "Customer Data Country Classification",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8ddbbeb0-fe22-4b90-a2ae-d29d1bb7f4f1",
+      "name": "Manual Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "getAllPeople"
+      },
+      "type": "n8n-nodes-base.n8nTrainingCustomerDatastore",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "2ebd5c6f-d191-4d4f-b73a-395a1db9435e",
+      "name": "Get Customer Data"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appiwwexff31mJ6Fo",
+          "mode": "list",
+          "cachedResultName": "Customer Info",
+          "cachedResultUrl": "https://airtable.com/appiwwexff31mJ6Fo"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblZ9vLw8tr5g3zn3",
+          "mode": "list",
+          "cachedResultName": "User Data",
+          "cachedResultUrl": "https://airtable.com/appiwwexff31mJ6Fo/tblZ9vLw8tr5g3zn3"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "bab29ecc-aa95-4ba0-a1d1-e6f2391d7bc9",
+      "name": "Search Customer Records"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "27c92415-841a-4ae8-beb4-7cd8614b8939",
+              "name": "Full Name",
+              "value": "={{ $json.fields['First Name'] }} {{ $json.fields['Last Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "9e3160e2-f8e6-478d-9176-1d9cde1e123f",
+              "name": "Email",
+              "value": "={{ $json.fields.Email }}",
+              "type": "string"
+            },
+            {
+              "id": "f493cd2a-d819-4e1b-8b3c-aaa918f97c14",
+              "name": "Phone Number",
+              "value": "={{ $json.fields['Phone 1'] }}",
+              "type": "string"
+            },
+            {
+              "id": "dfcda594-3a31-4f3f-ab54-cfb30bd5663e",
+              "name": "Country",
+              "value": "={{ $json.fields.Country }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        672,
+        0
+      ],
+      "id": "bc2127f6-fd24-4280-8821-924f11feab83",
+      "name": "Prepare Customer Data"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c4274552-9aac-4ebf-b0a7-eab6cbe0949b",
+              "leftValue": "={{ $json.Country }}",
+              "rightValue": "Bangladesh",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        896,
+        0
+      ],
+      "id": "3bef6a07-67c5-4f1e-b296-053a01703ca8",
+      "name": "Check Country"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "268815c1-e194-40c3-b32d-fecaff691909",
+              "name": "Full Name",
+              "value": "={{ $json['Full Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "7e0e335b-4e29-4558-87c2-a3deaed47b2f",
+              "name": "Phone Number",
+              "value": "={{ $json['Phone Number'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1120,
+        -96
+      ],
+      "id": "3a0f11ad-456c-4e3f-b0da-1ba370148159",
+      "name": "Bangladeshi Users"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "268815c1-e194-40c3-b32d-fecaff691909",
+              "name": "Full Name",
+              "value": "={{ $json['Full Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "7e0e335b-4e29-4558-87c2-a3deaed47b2f",
+              "name": "Phone Number",
+              "value": "={{ $json['Phone Number'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1136,
+        96
+      ],
+      "id": "b34c3ef4-8664-4a44-9e98-aa5ceef4c777",
+      "name": "Foreign Users"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Customer Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Customer Data": {
+      "main": [
+        [
+          {
+            "node": "Search Customer Records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Customer Records": {
+      "main": [
+        [
+          {
+            "node": "Prepare Customer Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Customer Data": {
+      "main": [
+        [
+          {
+            "node": "Check Country",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Country": {
+      "main": [
+        [
+          {
+            "node": "Bangladeshi Users",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Foreign Users",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "20224f9c-3a20-4cc9-a541-64f29b19c8f2",
+  "tags": []
+}
