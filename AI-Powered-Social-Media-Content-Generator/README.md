@@ -82,9 +82,10 @@ The workflow is intended for content generation and does not require connecting 
 
 ## Project Structure
 
+```text
 AI-Powered-Social-Media-Content-Generator/
-│
 ├── AI-Powered-Social-Media-Content-Generator.json
+├── workflow.png
 └── README.md
 
 ## Future Improvements
