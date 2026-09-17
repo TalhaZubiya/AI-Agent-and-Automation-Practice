@@ -1,0 +1,193 @@
+{
+  "name": "AI-Powered Social Media Content Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        128,
+        192
+      ],
+      "id": "b4621187-80e4-4493-a1c6-2344d9dab5ff",
+      "name": "Gemini AI Model"
+    },
+    {
+      "parameters": {
+        "formTitle": "AI-Powered Social Media Content Generator",
+        "formDescription": "Provide your content topic, target audience, and social media platform to generate relevant, engaging, and ready-to-use content ideas with the help of AI.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "What would you like to create?",
+              "fieldType": "textarea",
+              "placeholder": "Enter your content topic or idea..."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a371e00c-267d-4577-b294-193af78c0b37",
+      "name": "Content Request Form"
+    },
+    {
+      "parameters": {
+        "text": "=Create a creative and engaging social media post based on this topic:\n\nTopic: {{ $json['What would you like to create?'] }}\n\nWrite a natural, attention-grabbing caption with a strong hook and relevant hashtags. Keep it concise, clear, and suitable for social media.",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "Facebook Caption",
+              "description": "Create engaging and audience-friendly content for Facebook."
+            },
+            {
+              "name": "Instagram Caption",
+              "description": "Create visually engaging and catchy content for Instagram."
+            },
+            {
+              "name": "LinkedIn",
+              "description": "Create professional and informative content for LinkedIn."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "ce4ce5d1-81fa-478f-8e17-7472e43ee2e6",
+      "name": "Content Information Extractor"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "facebook-content",
+              "name": "Facebook Content",
+              "value": "={{ $json.output['Facebook Caption'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        656,
+        -128
+      ],
+      "id": "34770c0c-54f2-45c9-8318-8d8fe77ada9b",
+      "name": "Facebook Content"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "instagram-content",
+              "name": "Instagram Content",
+              "value": "={{ $json.output['Instagram Caption'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        656,
+        48
+      ],
+      "id": "61b094aa-c3a6-4657-84cb-00bf5269877d",
+      "name": "Instagram Content"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "linkedin-content",
+              "name": "LinkedIn Content",
+              "value": "={{ $json.output.LinkedIn }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        656,
+        240
+      ],
+      "id": "14376fcd-70b4-4f1b-93b6-c0d5f97429f4",
+      "name": "LinkedIn Content"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gemini AI Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Content Request Form": {
+      "main": [
+        [
+          {
+            "node": "Content Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Content Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Facebook Content",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Instagram Content",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "LinkedIn Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "tags": []
+}
