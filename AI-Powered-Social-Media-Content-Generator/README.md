@@ -88,6 +88,8 @@ AI-Powered-Social-Media-Content-Generator/
 ├── workflow.png
 └── README.md
 
+```
+
 ## Future Improvements
 
 - Add automated content scheduling
