@@ -23,11 +23,11 @@ The application connects with an n8n workflow that receives user messages, proce
 
 ## Application Preview
 
-![Nexora AI Chat](screenshots/app%20preview.png)
+![Nexora AI Chat](screenshots/app-preview.png)
 
 ## n8n Workflow
 
-![n8n Workflow](screenshots/n8n%20workflow.png)
+![n8n Workflow](screenshots/n8n-workflow.png)
 
 ## Architecture
 
